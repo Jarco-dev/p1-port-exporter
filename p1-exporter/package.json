@@ -1,6 +1,6 @@
 {
   "name": "p1-port-exporter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Parses API post requests into metrics to be fetched by prometheus",
   "main": "index.js",
   "dependencies": {
