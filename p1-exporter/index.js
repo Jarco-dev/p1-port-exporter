@@ -1,5 +1,3 @@
-// noinspection LanguageDetectionInspection
-
 const express = require("express");
 require("dotenv").config();
 
