@@ -40,7 +40,9 @@ class MetricsManager {
 
         this.metricsApp.get("/metrics", async (req, res) => {
             try {
-                if (this.metrics.dsmrVersion !== {}) {
+                if (!this.lastData.timestamp) {
+                    res.status(503).send("No metrics available yet");
+                } else {
                     res.set("Content-Type", this.promClient.register.contentType);
                     res.send(await this.promClient.register.metrics());
                 }
