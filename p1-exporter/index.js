@@ -46,10 +46,7 @@ class MetricsManager {
                 }
             } catch(err) {
                 console.log("Error while handling metrics request", err);
-                res.status(500).json({
-                    error: "internal_server_error",
-                    error_message: "A internal server error occurred"
-                });
+                res.status(500).send("A internal server error occurred");
             }
         });
 
