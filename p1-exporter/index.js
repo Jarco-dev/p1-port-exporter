@@ -62,7 +62,7 @@ class MetricsManager {
             name: "p1_power_active_tariff",
             help: "The current tariff",
             collect: () => {
-                this.metrics.powerActiveTariff.set(this.lastData.power.activeTariff);
+                if (this.lastData.power.activeTariff) this.metrics.powerActiveTariff.set(this.lastData.power.activeTariff);
             }
         })
 
@@ -71,7 +71,7 @@ class MetricsManager {
             name: "p1_power_actual_consumed",
             help: "The actual power consumed",
             collect: () => {
-                this.metrics.powerActualConsumed.set(this.lastData.power.actualConsumed)
+                if (this.lastData.power.activeTariff) this.metrics.powerActualConsumed.set(this.lastData.power.actualConsumed)
             }
         });
 
@@ -79,7 +79,7 @@ class MetricsManager {
             name: "p1_power_total_consumed_low",
             help: "The total power consumed during low tariff",
             collect: () => {
-                this.metrics.powerTotalConsumedLow.set(this.lastData.power.totalConsumed1);
+                if (this.lastData.power.totalConsumed1) this.metrics.powerTotalConsumedLow.set(this.lastData.power.totalConsumed1);
             }
         });
 
@@ -87,7 +87,7 @@ class MetricsManager {
             name: "p1_power_total_consumed_normal",
             help: "The total power consumed during normal tariff",
             collect: () => {
-                this.metrics.powerTotalConsumedNormal.set(this.lastData.power.totalConsumed2);
+                if (this.lastData.power.totalConsumed2) this.metrics.powerTotalConsumedNormal.set(this.lastData.power.totalConsumed2);
             }
         });
 
@@ -96,7 +96,7 @@ class MetricsManager {
             name: "p1_power_actual_produced",
             help: "The actual power produced",
             collect: () => {
-                this.metrics.powerActualProduced.set(this.lastData.power.actualProduced);
+                if (this.lastData.power.actualProduced) this.metrics.powerActualProduced.set(this.lastData.power.actualProduced);
             }
         });
 
@@ -104,7 +104,7 @@ class MetricsManager {
             name: "p1_power_total_produced_low",
             help: "The total power produced during low tariff",
             collect: () => {
-                this.metrics.powerTotalProducedLow.set(this.lastData.power.totalProduced1);
+                if (this.lastData.power.totalProduced1) this.metrics.powerTotalProducedLow.set(this.lastData.power.totalProduced1);
             }
         });
 
@@ -112,7 +112,7 @@ class MetricsManager {
             name: "p1_power_total_produced_normal",
             help: "The total power produced during normal tariff",
             collect: () => {
-                this.metrics.powerTotalProducedNormal.set(this.lastData.power.totalProduced2);
+                if (this.lastData.power.totalProduced2) this.metrics.powerTotalProducedNormal.set(this.lastData.power.totalProduced2);
             }
         });
 
@@ -121,7 +121,7 @@ class MetricsManager {
             name: "p1_power_failures",
             help: "The total amount of power failures",
             collect: () => {
-                this.metrics.powerFailures.set(this.lastData.power.failures);
+                if (this.lastData.power.failures) this.metrics.powerFailures.set(this.lastData.power.failures);
             }
         });
 
@@ -129,7 +129,7 @@ class MetricsManager {
             name: "p1_power_failures_long",
             help: "The total amount of long power failures",
             collect: () => {
-                this.metrics.powerFailuresLong.set(this.lastData.power.failuresLong);
+                if (this.lastData.power.failuresLong) this.metrics.powerFailuresLong.set(this.lastData.power.failuresLong);
             }
         });
 
@@ -138,7 +138,7 @@ class MetricsManager {
             name: "p1_power_voltage_sags_l1",
             help: "The total amount of voltage sags for L1",
             collect: () => {
-                this.metrics.powerVoltageSagsL1.set(this.lastData.power.voltageSagsL1);
+                if (this.lastData.power.voltageSagsL1) this.metrics.powerVoltageSagsL1.set(this.lastData.power.voltageSagsL1);
             }
         });
 
@@ -146,7 +146,7 @@ class MetricsManager {
             name: "p1_power_voltage_sags_l2",
             help: "The total amount of voltage sags for L2",
             collect: () => {
-                this.metrics.powerVoltageSagsL2.set(this.lastData.power.voltageSagsL2);
+                if (this.lastData.power.voltageSagsL2) this.metrics.powerVoltageSagsL2.set(this.lastData.power.voltageSagsL2);
             }
         });
 
@@ -154,7 +154,7 @@ class MetricsManager {
             name: "p1_power_voltage_sags_l3",
             help: "The total amount of voltage sags for L3",
             collect: () => {
-                this.metrics.powerVoltageSagsL3.set(this.lastData.power.voltageSagsL3);
+                if (this.lastData.power.voltageSagsL3) this.metrics.powerVoltageSagsL3.set(this.lastData.power.voltageSagsL3);
             }
         });
 
@@ -163,7 +163,7 @@ class MetricsManager {
             name: "p1_power_voltage_swells_l1",
             help: "The total amount of voltage swells for L1",
             collect: () => {
-                this.metrics.powerVoltageSwellsL1.set(this.lastData.power.voltageSwellsL1);
+                if (this.lastData.power.voltageSwellsL1) this.metrics.powerVoltageSwellsL1.set(this.lastData.power.voltageSwellsL1);
             }
         });
 
@@ -171,7 +171,7 @@ class MetricsManager {
             name: "p1_power_voltage_swells_l2",
             help: "The total amount of voltage swells for L2",
             collect: () => {
-                this.metrics.powerVoltageSwellsL2.set(this.lastData.power.voltageSwellsL2);
+                if (this.lastData.power.voltageSwellsL2) this.metrics.powerVoltageSwellsL2.set(this.lastData.power.voltageSwellsL2);
             }
         });
 
@@ -179,7 +179,7 @@ class MetricsManager {
             name: "p1_power_voltage_swells_l3",
             help: "The total amount of voltage swells for L3",
             collect: () => {
-                this.metrics.powerVoltageSwellsL3.set(this.lastData.power.voltageSwellsL3);
+                if (this.lastData.power.voltageSwellsL3) this.metrics.powerVoltageSwellsL3.set(this.lastData.power.voltageSwellsL3);
             }
         });
 
@@ -188,7 +188,7 @@ class MetricsManager {
             name: "p1_power_instantaneous_voltage_l1",
             help: "The instantaneous voltage for L1",
             collect: () => {
-                this.metrics.powerInstantaneousVoltageL1.set(this.lastData.power.instantaneousVoltageL1);
+                if (this.lastData.power.instantaneousVoltageL1) this.metrics.powerInstantaneousVoltageL1.set(this.lastData.power.instantaneousVoltageL1);
             }
         });
 
@@ -196,7 +196,7 @@ class MetricsManager {
             name: "p1_power_instantaneous_voltage_l2",
             help: "The instantaneous voltage for L2",
             collect: () => {
-                this.metrics.powerInstantaneousVoltageL2.set(this.lastData.power.instantaneousVoltageL2);
+                if (this.lastData.power.instantaneousVoltageL2) this.metrics.powerInstantaneousVoltageL2.set(this.lastData.power.instantaneousVoltageL2);
             }
         });
 
@@ -204,7 +204,7 @@ class MetricsManager {
             name: "p1_power_instantaneous_voltage_l3",
             help: "The instantaneous voltage for L3",
             collect: () => {
-                this.metrics.powerInstantaneousVoltageL3.set(this.lastData.power.instantaneousVoltageL3);
+                if (this.lastData.power.instantaneousVoltageL3) this.metrics.powerInstantaneousVoltageL3.set(this.lastData.power.instantaneousVoltageL3);
             }
         });
 
@@ -213,7 +213,7 @@ class MetricsManager {
             name: "p1_power_instantaneous_current_l1",
             help: "The instantaneous current for L1",
             collect: () => {
-                this.metrics.powerInstantaneousCurrentL1.set(this.lastData.power.instantaneousCurrentL1);
+                if (this.lastData.power.instantaneousCurrentL1) this.metrics.powerInstantaneousCurrentL1.set(this.lastData.power.instantaneousCurrentL1);
             }
         });
 
@@ -221,7 +221,7 @@ class MetricsManager {
             name: "p1_power_instantaneous_current_l2",
             help: "The instantaneous current for L2",
             collect: () => {
-                this.metrics.powerInstantaneousCurrentL2.set(this.lastData.power.instantaneousCurrentL2);
+                if (this.lastData.power.instantaneousCurrentL2) this.metrics.powerInstantaneousCurrentL2.set(this.lastData.power.instantaneousCurrentL2);
             }
         });
 
@@ -229,7 +229,7 @@ class MetricsManager {
             name: "p1_power_instantaneous_current_l3",
             help: "The instantaneous current for L3",
             collect: () => {
-                this.metrics.powerInstantaneousCurrentL3.set(this.lastData.power.instantaneousCurrentL3);
+                if (this.lastData.power.instantaneousCurrentL3) this.metrics.powerInstantaneousCurrentL3.set(this.lastData.power.instantaneousCurrentL3);
             }
         });
 
@@ -238,7 +238,7 @@ class MetricsManager {
             name: "p1_power_instantaneous_consumed_electricity_l1",
             help: "The instantaneous electricity consumed for L1",
             collect: () => {
-                this.metrics.powerInstantaneousConsumedElectricityl1.set(this.lastData.power.instantaneousConsumedElectricityL1);
+                if (this.lastData.power.instantaneousConsumedElectricityL1) this.metrics.powerInstantaneousConsumedElectricityl1.set(this.lastData.power.instantaneousConsumedElectricityL1);
             }
         });
 
@@ -246,7 +246,7 @@ class MetricsManager {
             name: "p1_power_instantaneous_consumed_electricity_l2",
             help: "The instantaneous electricity consumed for L2",
             collect: () => {
-                this.metrics.powerInstantaneousConsumedElectricityl2.set(this.lastData.power.instantaneousConsumedElectricityL2);
+                if (this.lastData.power.instantaneousConsumedElectricityL2) this.metrics.powerInstantaneousConsumedElectricityl2.set(this.lastData.power.instantaneousConsumedElectricityL2);
             }
         });
 
@@ -254,16 +254,16 @@ class MetricsManager {
             name: "p1_power_instantaneous_consumed_electricity_l3",
             help: "The instantaneous electricity consumed for L3",
             collect: () => {
-                this.metrics.powerInstantaneousConsumedElectricityl3.set(this.lastData.power.instantaneousConsumedElectricityL3);
+                if (this.lastData.power.instantaneousConsumedElectricityL3) this.metrics.powerInstantaneousConsumedElectricityl3.set(this.lastData.power.instantaneousConsumedElectricityL3);
             }
         });
-        
+
         // Power instantaneous produced electricity
         this.metrics.powerInstantaneousProducedElectricityl1 = new this.promClient.Gauge({
             name: "p1_power_instantaneous_produced_electricity_l1",
             help: "The instantaneous electricity produced for L1",
             collect: () => {
-                this.metrics.powerInstantaneousProducedElectricityl1.set(this.lastData.power.instantaneousProducedElectricityL1);
+                if (this.lastData.power.instantaneousProducedElectricityL1) this.metrics.powerInstantaneousProducedElectricityl1.set(this.lastData.power.instantaneousProducedElectricityL1);
             }
         });
 
@@ -271,7 +271,7 @@ class MetricsManager {
             name: "p1_power_instantaneous_produced_electricity_l2",
             help: "The instantaneous electricity produced for L2",
             collect: () => {
-                this.metrics.powerInstantaneousProducedElectricityl2.set(this.lastData.power.instantaneousProducedElectricityL2);
+                if (this.lastData.power.instantaneousProducedElectricityL2) this.metrics.powerInstantaneousProducedElectricityl2.set(this.lastData.power.instantaneousProducedElectricityL2);
             }
         });
 
@@ -279,7 +279,7 @@ class MetricsManager {
             name: "p1_power_instantaneous_produced_electricity_l3",
             help: "The instantaneous electricity produced for L3",
             collect: () => {
-                this.metrics.powerInstantaneousProducedElectricityl3.set(this.lastData.power.instantaneousProducedElectricityL3);
+                if (this.lastData.power.instantaneousProducedElectricityL3) this.metrics.powerInstantaneousProducedElectricityl3.set(this.lastData.power.instantaneousProducedElectricityL3);
             }
         });
 
@@ -288,12 +288,12 @@ class MetricsManager {
             name: "p1_gas_total_consumed",
             help: "The total gas consumed in m3",
             collect: () => {
-                this.metrics.gasTotalConsumed.set(this.lastData.gas.totalConsumed);
+                if (this.lastData.gas.totalConsumed) this.metrics.gasTotalConsumed.set(this.lastData.gas.totalConsumed);
             }
         });
     }
 
-    calcTimestamp (timeString) {
+    calcTimestamp(timeString) {
         return new Date(2000 + parseInt(timeString.substr(0, 2), 10),
             parseInt(timeString.substr(2, 2), 10) - 1,
             parseInt(timeString.substr(4, 2), 10),
