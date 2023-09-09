@@ -4,17 +4,13 @@
 // Config start
 #define WIFI_NAME ""
 #define WIFI_PASSWORD ""
+#define HW_API_URL ""
 #define API_URL ""
 #define API_KEY ""
 // Config end
 
-#define BUFSIZE 2048
-char buffer[BUFSIZE];
-int bufpos = 0;
-int countTillUpdate = 4;
-bool reading = false;
-bool lastLine = false;
-bool updateInstandly = true;
+String data = "";
+bool updateInstantly = true;
 
 void setup() {
   // Init pins
@@ -22,10 +18,11 @@ void setup() {
   digitalWrite(LED_BUILTIN, HIGH);
 
   // Init serial
-  Serial.begin(115200);
+  Serial.begin(9600);
 
   // Init wifi
   WiFi.mode(WIFI_STA);
+  WiFi.setHostname("p1-port-exporter");
   WiFi.begin(WIFI_NAME, WIFI_PASSWORD);
   Serial.println();
   while (WiFi.status() != WL_CONNECTED) {
@@ -56,50 +53,52 @@ void loop() {
     Serial.println("");
   }
 
-  // Process serial
-  while(Serial.available()) {
-    char c = Serial.read();
+  fetchHomeWizardData();
+  updateRemoteData();
+  delay(5000);
+}
 
-    // Coninue packet
-    if(reading) {
-      // End of packet or prevent buffer overflow
-      if ((lastLine && c == '\n') || bufpos == BUFSIZE-1) {
-        buffer[bufpos] = '\0';
-        // Check if we should sent a update request
-        if (countTillUpdate == 4 || updateInstandly == true) {
-          countTillUpdate = 0;
-          updateInstandly = false;
-          updateRemoteData();
-        } else {
-          countTillUpdate++;
-        }
+void fetchHomeWizardData() {
+  WiFiClient client;
+  HTTPClient http;
 
-        // Clear variables
-        Serial.flush();
-        bufpos = 0;
-        reading = false;
-        lastLine = false;
-        while(Serial.available()) {
-          char c2 = Serial.read();
-        }
-      }
+  // Create http request
+  Serial.print("[HTTP] begin...\n");
+  http.begin(client, HW_API_URL);
+  http.addHeader("Content-Type", "text/plain");
 
-      // Detect last packet line
-      else {
-        if(c == '!') {
-          lastLine = true;
-        }
-        buffer[bufpos++] = c;
-      }
-    }
+  // Get request
+  Serial.print("[HTTP] GET...\n");
+  int httpCode = http.GET();
+  data = http.getString();
 
-    // Init new packet
-    else if(c == '/') {
-      // Detected start char. Start reading the new P1 packet...
-      reading = true;
-      buffer[bufpos++] = c;
+  // Handle successful response
+  if (httpCode > 0) {
+    Serial.printf("[HTTP] GET... code: %d\n", httpCode);
+    if (httpCode == HTTP_CODE_OK) {
+      // const String& payload = http.getString();
+      Serial.println("Received payload:\n<<");
+      Serial.println(data);
+      Serial.println(">>");
+    } else if (httpCode == 401) {
+      updateInstantly = true;
+      Serial.println("Received payload:\n<<");
+      Serial.println(data);
+      Serial.println(">>");
+    } else {
+      updateInstantly = true;
     }
   }
+
+  // Handle unsuccessful response
+  else {
+    updateInstantly = true;
+    Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+  }
+
+  // Disable led
+  digitalWrite(LED_BUILTIN, HIGH);
+
 }
 
 void updateRemoteData() {
@@ -117,7 +116,7 @@ void updateRemoteData() {
 
   // Post request
   Serial.print("[HTTP] POST...\n");
-  int httpCode = http.POST(buffer);
+  int httpCode = http.POST(data);
 
   // Handle successful response
   if (httpCode > 0) {
@@ -128,19 +127,19 @@ void updateRemoteData() {
       Serial.println(payload);
       Serial.println(">>");
     } else if (httpCode == 401) {
-      updateInstandly = true;
+      updateInstantly = true;
       const String& payload = http.getString();
       Serial.println("Received payload:\n<<");
       Serial.println(payload);
       Serial.println(">>");
     } else {
-      updateInstandly = true;
+      updateInstantly = true;
     }
   }
 
   // Handle unsuccessful response
   else {
-    updateInstandly = true;
+    updateInstantly = true;
     Serial.printf("[HTTP] POST... failed, error: %s\n", http.errorToString(httpCode).c_str());
   }
 
