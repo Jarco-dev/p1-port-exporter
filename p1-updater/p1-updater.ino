@@ -54,8 +54,10 @@ void loop() {
   }
 
   fetchHomeWizardData();
-  updateRemoteData();
-  delay(5000);
+  if (data != "none") {
+    updateRemoteData();
+  }
+  delay(10000);
 }
 
 void fetchHomeWizardData() {
@@ -92,6 +94,7 @@ void fetchHomeWizardData() {
 
   // Handle unsuccessful response
   else {
+    data = "none";
     updateInstantly = true;
     Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
   }
